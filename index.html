@@ -1,116 +1,449 @@
+
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-Hant">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>善與惡人格測驗</title>
-    <style>
-        body {
-            font-family: 'Microsoft JhengHei', sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 20px;
-            background-color: #f5f5f5;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        h1 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 30px;
-        }
-        .question-container {
-            display: none;
-        }
-        .question-container.active {
-            display: block;
-        }
-        .question {
-            margin-bottom: 20px;
-            padding: 20px;
-            border: 1px solid #eee;
-            border-radius: 5px;
-        }
-        .options {
-            margin-top: 15px;
-        }
-        .option {
-            display: block;
-            margin: 10px 0;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        .option:hover {
-            background-color: #f0f0f0;
-        }
-        .option.selected {
-            background-color: #e3f2fd;
-            border-color: #2196F3;
-        }
-        .navigation {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
-        }
-        button {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            background-color: #2196F3;
-            color: white;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        button:hover {
-            background-color: #1976D2;
-        }
-        button:disabled {
-            background-color: #ccc;
-            cursor: not-allowed;
-        }
-        .progress {
-            margin-top: 20px;
-            text-align: center;
-        }
-        #result {
-            display: none;
-            margin-top: 30px;
-            padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            background-color: #f9f9f9;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>善與惡人格測驗</title>
+  <style>
+    body { font-family: sans-serif; max-width: 800px; margin: auto; padding: 2rem; background: #f4f4f4; }
+    h1 { text-align: center; }
+    .question { margin-bottom: 1.5rem; }
+    .answers label { display: block; margin-bottom: 0.3rem; }
+    button { display: block; margin: 2rem auto; padding: 0.7rem 1.5rem; font-size: 1.1rem; }
+    #result { text-align: center; font-size: 1.3rem; margin-top: 2rem; }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>善與惡人格測驗</h1>
-        <div id="intro">
-            <p>這是一份50題的善、中立、惡人格測驗，幫助你了解你的行為模式更接近「善」、「中立」還是「惡」。</p>
-            <p>請根據你的真實想法與行為，選擇最符合你的答案。</p>
-            <button onclick="startTest()">開始測驗</button>
-        </div>
-        <div id="test" style="display: none;">
-            <div id="questions"></div>
-            <div class="navigation">
-                <button id="prevBtn" onclick="prevQuestion()" disabled>上一題</button>
-                <button id="nextBtn" onclick="nextQuestion()">下一題</button>
-            </div>
-            <div class="progress">
-                <span id="progress">第 1 題 / 共 50 題</span>
-            </div>
-        </div>
-        <div id="result"></div>
+  <h1>善與惡人格測驗</h1>
+  <p>這是 50 題的善、中立、惡人格測驗，請根據你的真實想法作答。</p>
+  <form id="quizForm">
+
+    <div class="question">
+      <h3>第 1 題</h3>
+      <p>當有人向你求助時，你通常會願意提供幫助，即使這對你沒有直接好處。</p>
+      <label><input type="radio" name="q0" value="A" required> A. 同意</label>
+      <label><input type="radio" name="q0" value="B"> B. 視情況而定</label>
+      <label><input type="radio" name="q0" value="C"> C. 不同意</label>
     </div>
-    <script src="script.js"></script>
+    
+    <div class="question">
+      <h3>第 2 題</h3>
+      <p>如果你幫助別人，你會期待對方未來回報你。</p>
+      <label><input type="radio" name="q1" value="A" required> A. 同意</label>
+      <label><input type="radio" name="q1" value="B"> B. 視情況而定</label>
+      <label><input type="radio" name="q1" value="C"> C. 不同意</label>
+    </div>
+    
+    <div class="question">
+      <h3>第 3 題</h3>
+      <p>當同事或朋友遇到困難時，你會觀察情況，再決定是否提供協助。</p>
+      <label><input type="radio" name="q2" value="A" required> A. 同意</label>
+      <label><input type="radio" name="q2" value="B"> B. 視情況而定</label>
+      <label><input type="radio" name="q2" value="C"> C. 不同意</label>
+    </div>
+    
+    <div class="question">
+      <h3>第 4 題</h3>
+      <p>你認為只要對自己有利，就算別人受到影響也沒關係。</p>
+      <label><input type="radio" name="q3" value="A" required> A. 同意</label>
+      <label><input type="radio" name="q3" value="B"> B. 視情況而定</label>
+      <label><input type="radio" name="q3" value="C"> C. 不同意</label>
+    </div>
+    
+    <div class="question">
+      <h3>第 5 題</h3>
+      <p>如果你知道一個秘密能幫助某人，但會讓你自己陷入麻煩，你仍然會說出來。</p>
+      <label><input type="radio" name="q4" value="A" required> A. 同意</label>
+      <label><input type="radio" name="q4" value="B"> B. 視情況而定</label>
+      <label><input type="radio" name="q4" value="C"> C. 不同意</label>
+    </div>
+    
+    <div class="question">
+      <h3>第 6 題</h3>
+      <p>你喜歡在團隊合作時，確保所有人都獲得公平的機會。</p>
+      <label><input type="radio" name="q5" value="A" required> A. 同意</label>
+      <label><input type="radio" name="q5" value="B"> B. 視情況而定</label>
+      <label><input type="radio" name="q5" value="C"> C. 不同意</label>
+    </div>
+    
+    <div class="question">
+      <h3>第 7 題</h3>
+      <p>你相信世界的運作本質是「適者生存」，弱者應該自求多福。</p>
+      <label><input type="radio" name="q6" value="A" required> A. 同意</label>
+      <label><input type="radio" name="q6" value="B"> B. 視情況而定</label>
+      <label><input type="radio" name="q6" value="C"> C. 不同意</label>
+    </div>
+    
+    <div class="question">
+      <h3>第 8 題</h3>
+      <p>如果你的成功會影響其他人，你仍然會選擇追求自己的目標。</p>
+      <label><input type="radio" name="q7" value="A" required> A. 同意</label>
+      <label><input type="radio" name="q7" value="B"> B. 視情況而定</label>
+      <label><input type="radio" name="q7" value="C"> C. 不同意</label>
+    </div>
+    
+    <div class="question">
+      <h3>第 9 題</h3>
+      <p>你會主動關心身邊的朋友或家人，而不是等他們來找你。</p>
+      <label><input type="radio" name="q8" value="A" required> A. 同意</label>
+      <label><input type="radio" name="q8" value="B"> B. 視情況而定</label>
+      <label><input type="radio" name="q8" value="C"> C. 不同意</label>
+    </div>
+    
+    <div class="question">
+      <h3>第 10 題</h3>
+      <p>當你看到路人遇到困難時（如跌倒、迷路），你會主動幫助他們。</p>
+      <label><input type="radio" name="q9" value="A" required> A. 同意</label>
+      <label><input type="radio" name="q9" value="B"> B. 視情況而定</label>
+      <label><input type="radio" name="q9" value="C"> C. 不同意</label>
+    </div>
+    
+    <div class="question">
+      <h3>第 11 題</h3>
+      <p>在職場或生意中，你認為「誠信」比「獲利」更重要。</p>
+      <label><input type="radio" name="q10" value="A" required> A. 同意</label>
+      <label><input type="radio" name="q10" value="B"> B. 視情況而定</label>
+      <label><input type="radio" name="q10" value="C"> C. 不同意</label>
+    </div>
+    
+    <div class="question">
+      <h3>第 12 題</h3>
+      <p>你會刻意隱瞞某些資訊，以確保自己在競爭中獲勝。</p>
+      <label><input type="radio" name="q11" value="A" required> A. 同意</label>
+      <label><input type="radio" name="q11" value="B"> B. 視情況而定</label>
+      <label><input type="radio" name="q11" value="C"> C. 不同意</label>
+    </div>
+    
+    <div class="question">
+      <h3>第 13 題</h3>
+      <p>當發現別人的錯誤可能讓你獲益時，你會選擇不揭露它。</p>
+      <label><input type="radio" name="q12" value="A" required> A. 同意</label>
+      <label><input type="radio" name="q12" value="B"> B. 視情況而定</label>
+      <label><input type="radio" name="q12" value="C"> C. 不同意</label>
+    </div>
+    
+    <div class="question">
+      <h3>第 14 題</h3>
+      <p>你認為道德只是社會的規範，真正的成功來自於個人的決策與手段。</p>
+      <label><input type="radio" name="q13" value="A" required> A. 同意</label>
+      <label><input type="radio" name="q13" value="B"> B. 視情況而定</label>
+      <label><input type="radio" name="q13" value="C"> C. 不同意</label>
+    </div>
+    
+    <div class="question">
+      <h3>第 15 題</h3>
+      <p>如果有機會透過合法但不道德的方式賺大錢，你會毫不猶豫地去做。</p>
+      <label><input type="radio" name="q14" value="A" required> A. 同意</label>
+      <label><input type="radio" name="q14" value="B"> B. 視情況而定</label>
+      <label><input type="radio" name="q14" value="C"> C. 不同意</label>
+    </div>
+    
+    <div class="question">
+      <h3>第 16 題</h3>
+      <p>如果你知道某個機會對朋友有幫助，但你自己也想要，你會主動分享嗎？</p>
+      <label><input type="radio" name="q15" value="A" required> A. 同意</label>
+      <label><input type="radio" name="q15" value="B"> B. 視情況而定</label>
+      <label><input type="radio" name="q15" value="C"> C. 不同意</label>
+    </div>
+    
+    <div class="question">
+      <h3>第 17 題</h3>
+      <p>你認為成功的人通常是因為比別人更狠、更敢於競爭。</p>
+      <label><input type="radio" name="q16" value="A" required> A. 同意</label>
+      <label><input type="radio" name="q16" value="B"> B. 視情況而定</label>
+      <label><input type="radio" name="q16" value="C"> C. 不同意</label>
+    </div>
+    
+    <div class="question">
+      <h3>第 18 題</h3>
+      <p>你相信「利己」與「利他」可以並存，而不是二選一。</p>
+      <label><input type="radio" name="q17" value="A" required> A. 同意</label>
+      <label><input type="radio" name="q17" value="B"> B. 視情況而定</label>
+      <label><input type="radio" name="q17" value="C"> C. 不同意</label>
+    </div>
+    
+    <div class="question">
+      <h3>第 19 題</h3>
+      <p>你認為為了生存，每個人都必須學會「攻擊」與「防禦」。</p>
+      <label><input type="radio" name="q18" value="A" required> A. 同意</label>
+      <label><input type="radio" name="q18" value="B"> B. 視情況而定</label>
+      <label><input type="radio" name="q18" value="C"> C. 不同意</label>
+    </div>
+    
+    <div class="question">
+      <h3>第 20 題</h3>
+      <p>你不介意使用心理戰術或操控技巧來讓自己獲得更好的機會。</p>
+      <label><input type="radio" name="q19" value="A" required> A. 同意</label>
+      <label><input type="radio" name="q19" value="B"> B. 視情況而定</label>
+      <label><input type="radio" name="q19" value="C"> C. 不同意</label>
+    </div>
+    
+    <div class="question">
+      <h3>第 21 題</h3>
+      <p>你認為規則是為了維護秩序，所以應該遵守。</p>
+      <label><input type="radio" name="q20" value="A" required> A. 同意</label>
+      <label><input type="radio" name="q20" value="B"> B. 視情況而定</label>
+      <label><input type="radio" name="q20" value="C"> C. 不同意</label>
+    </div>
+    
+    <div class="question">
+      <h3>第 22 題</h3>
+      <p>當規則對你不利時，你會考慮繞過它，而不是直接違反。</p>
+      <label><input type="radio" name="q21" value="A" required> A. 同意</label>
+      <label><input type="radio" name="q21" value="B"> B. 視情況而定</label>
+      <label><input type="radio" name="q21" value="C"> C. 不同意</label>
+    </div>
+    
+    <div class="question">
+      <h3>第 23 題</h3>
+      <p>你認為規則是束縛強者的工具，真正成功的人應該懂得「彈性運用」規則。</p>
+      <label><input type="radio" name="q22" value="A" required> A. 同意</label>
+      <label><input type="radio" name="q22" value="B"> B. 視情況而定</label>
+      <label><input type="radio" name="q22" value="C"> C. 不同意</label>
+    </div>
+    
+    <div class="question">
+      <h3>第 24 題</h3>
+      <p>你願意為了維護正義，挺身對抗不公平的制度或權威。</p>
+      <label><input type="radio" name="q23" value="A" required> A. 同意</label>
+      <label><input type="radio" name="q23" value="B"> B. 視情況而定</label>
+      <label><input type="radio" name="q23" value="C"> C. 不同意</label>
+    </div>
+    
+    <div class="question">
+      <h3>第 25 題</h3>
+      <p>如果你發現某條法律不合理，但違反它不會有後果，你會選擇違反它嗎？</p>
+      <label><input type="radio" name="q24" value="A" required> A. 同意</label>
+      <label><input type="radio" name="q24" value="B"> B. 視情況而定</label>
+      <label><input type="radio" name="q24" value="C"> C. 不同意</label>
+    </div>
+    
+    <div class="question">
+      <h3>第 26 題</h3>
+      <p>你認為世界不應該只有黑與白，還有很多灰色地帶。</p>
+      <label><input type="radio" name="q25" value="A" required> A. 同意</label>
+      <label><input type="radio" name="q25" value="B"> B. 視情況而定</label>
+      <label><input type="radio" name="q25" value="C"> C. 不同意</label>
+    </div>
+    
+    <div class="question">
+      <h3>第 27 題</h3>
+      <p>你認為所有規則都應該按照情況決定，而不是絕對服從。</p>
+      <label><input type="radio" name="q26" value="A" required> A. 同意</label>
+      <label><input type="radio" name="q26" value="B"> B. 視情況而定</label>
+      <label><input type="radio" name="q26" value="C"> C. 不同意</label>
+    </div>
+    
+    <div class="question">
+      <h3>第 28 題</h3>
+      <p>你相信法律應該要保障每個人的公平，而不是讓某些人獲得優勢。</p>
+      <label><input type="radio" name="q27" value="A" required> A. 同意</label>
+      <label><input type="radio" name="q27" value="B"> B. 視情況而定</label>
+      <label><input type="radio" name="q27" value="C"> C. 不同意</label>
+    </div>
+    
+    <div class="question">
+      <h3>第 29 題</h3>
+      <p>你願意站出來反抗腐敗或不公，即使會讓自己陷入危險。</p>
+      <label><input type="radio" name="q28" value="A" required> A. 同意</label>
+      <label><input type="radio" name="q28" value="B"> B. 視情況而定</label>
+      <label><input type="radio" name="q28" value="C"> C. 不同意</label>
+    </div>
+    
+    <div class="question">
+      <h3>第 30 題</h3>
+      <p>你覺得世界上真正的成功者通常不會完全遵守規則。</p>
+      <label><input type="radio" name="q29" value="A" required> A. 同意</label>
+      <label><input type="radio" name="q29" value="B"> B. 視情況而定</label>
+      <label><input type="radio" name="q29" value="C"> C. 不同意</label>
+    </div>
+    
+    <div class="question">
+      <h3>第 31 題</h3>
+      <p>你認為真正的成功來自於幫助他人，而不僅僅是獲得個人利益。</p>
+      <label><input type="radio" name="q30" value="A" required> A. 同意</label>
+      <label><input type="radio" name="q30" value="B"> B. 視情況而定</label>
+      <label><input type="radio" name="q30" value="C"> C. 不同意</label>
+    </div>
+    
+    <div class="question">
+      <h3>第 32 題</h3>
+      <p>當面對競爭時，你願意放棄部分利益來維護公平性。</p>
+      <label><input type="radio" name="q31" value="A" required> A. 同意</label>
+      <label><input type="radio" name="q31" value="B"> B. 視情況而定</label>
+      <label><input type="radio" name="q31" value="C"> C. 不同意</label>
+    </div>
+    
+    <div class="question">
+      <h3>第 33 題</h3>
+      <p>你認為只要結果是好的，過程怎麼做並不重要。</p>
+      <label><input type="radio" name="q32" value="A" required> A. 同意</label>
+      <label><input type="radio" name="q32" value="B"> B. 視情況而定</label>
+      <label><input type="radio" name="q32" value="C"> C. 不同意</label>
+    </div>
+    
+    <div class="question">
+      <h3>第 34 題</h3>
+      <p>你傾向於選擇能讓自己受益最多的選擇，而不是考慮別人的感受。</p>
+      <label><input type="radio" name="q33" value="A" required> A. 同意</label>
+      <label><input type="radio" name="q33" value="B"> B. 視情況而定</label>
+      <label><input type="radio" name="q33" value="C"> C. 不同意</label>
+    </div>
+    
+    <div class="question">
+      <h3>第 35 題</h3>
+      <p>你覺得世界是零和遊戲（有人贏就有人輸），所以你必須爭取最大利益。</p>
+      <label><input type="radio" name="q34" value="A" required> A. 同意</label>
+      <label><input type="radio" name="q34" value="B"> B. 視情況而定</label>
+      <label><input type="radio" name="q34" value="C"> C. 不同意</label>
+    </div>
+    
+    <div class="question">
+      <h3>第 36 題</h3>
+      <p>你相信互利共贏比單方面獲勝更有價值。</p>
+      <label><input type="radio" name="q35" value="A" required> A. 同意</label>
+      <label><input type="radio" name="q35" value="B"> B. 視情況而定</label>
+      <label><input type="radio" name="q35" value="C"> C. 不同意</label>
+    </div>
+    
+    <div class="question">
+      <h3>第 37 題</h3>
+      <p>你認為自己擁有的東西不需要與別人分享，除非能換取更大的利益。</p>
+      <label><input type="radio" name="q36" value="A" required> A. 同意</label>
+      <label><input type="radio" name="q36" value="B"> B. 視情況而定</label>
+      <label><input type="radio" name="q36" value="C"> C. 不同意</label>
+    </div>
+    
+    <div class="question">
+      <h3>第 38 題</h3>
+      <p>你相信人性本善，世界只需要更多善良的人就能變得更好。</p>
+      <label><input type="radio" name="q37" value="A" required> A. 同意</label>
+      <label><input type="radio" name="q37" value="B"> B. 視情況而定</label>
+      <label><input type="radio" name="q37" value="C"> C. 不同意</label>
+    </div>
+    
+    <div class="question">
+      <h3>第 39 題</h3>
+      <p>你覺得「強者生存、弱者淘汰」是不可避免的現實。</p>
+      <label><input type="radio" name="q38" value="A" required> A. 同意</label>
+      <label><input type="radio" name="q38" value="B"> B. 視情況而定</label>
+      <label><input type="radio" name="q38" value="C"> C. 不同意</label>
+    </div>
+    
+    <div class="question">
+      <h3>第 40 題</h3>
+      <p>你會選擇一條相對輕鬆但穩定的路，而不是高風險但可能賺大錢的道路。</p>
+      <label><input type="radio" name="q39" value="A" required> A. 同意</label>
+      <label><input type="radio" name="q39" value="B"> B. 視情況而定</label>
+      <label><input type="radio" name="q39" value="C"> C. 不同意</label>
+    </div>
+    
+    <div class="question">
+      <h3>第 41 題</h3>
+      <p>你願意花時間在維護朋友與家人的關係，而不是只專注於個人目標。</p>
+      <label><input type="radio" name="q40" value="A" required> A. 同意</label>
+      <label><input type="radio" name="q40" value="B"> B. 視情況而定</label>
+      <label><input type="radio" name="q40" value="C"> C. 不同意</label>
+    </div>
+    
+    <div class="question">
+      <h3>第 42 題</h3>
+      <p>你會選擇犧牲自己的時間或利益來幫助重要的人。</p>
+      <label><input type="radio" name="q41" value="A" required> A. 同意</label>
+      <label><input type="radio" name="q41" value="B"> B. 視情況而定</label>
+      <label><input type="radio" name="q41" value="C"> C. 不同意</label>
+    </div>
+    
+    <div class="question">
+      <h3>第 43 題</h3>
+      <p>你認為人際關係應該建立在互相利用的基礎上，而不是單純的感情。</p>
+      <label><input type="radio" name="q42" value="A" required> A. 同意</label>
+      <label><input type="radio" name="q42" value="B"> B. 視情況而定</label>
+      <label><input type="radio" name="q42" value="C"> C. 不同意</label>
+    </div>
+    
+    <div class="question">
+      <h3>第 44 題</h3>
+      <p>你認為誠實是長久維繫關係的關鍵。</p>
+      <label><input type="radio" name="q43" value="A" required> A. 同意</label>
+      <label><input type="radio" name="q43" value="B"> B. 視情況而定</label>
+      <label><input type="radio" name="q43" value="C"> C. 不同意</label>
+    </div>
+    
+    <div class="question">
+      <h3>第 45 題</h3>
+      <p>你覺得世界上大多數人都只是在乎自己，沒有人會無條件幫助別人。</p>
+      <label><input type="radio" name="q44" value="A" required> A. 同意</label>
+      <label><input type="radio" name="q44" value="B"> B. 視情況而定</label>
+      <label><input type="radio" name="q44" value="C"> C. 不同意</label>
+    </div>
+    
+    <div class="question">
+      <h3>第 46 題</h3>
+      <p>你相信有些時候，欺騙是合理的，因為說實話可能會帶來更大的問題。</p>
+      <label><input type="radio" name="q45" value="A" required> A. 同意</label>
+      <label><input type="radio" name="q45" value="B"> B. 視情況而定</label>
+      <label><input type="radio" name="q45" value="C"> C. 不同意</label>
+    </div>
+    
+    <div class="question">
+      <h3>第 47 題</h3>
+      <p>當別人誤解你時，你會試圖解釋，而不是讓他們繼續誤會。</p>
+      <label><input type="radio" name="q46" value="A" required> A. 同意</label>
+      <label><input type="radio" name="q46" value="B"> B. 視情況而定</label>
+      <label><input type="radio" name="q46" value="C"> C. 不同意</label>
+    </div>
+    
+    <div class="question">
+      <h3>第 48 題</h3>
+      <p>你認為人際關係應該要「先有價值，才值得投資」。</p>
+      <label><input type="radio" name="q47" value="A" required> A. 同意</label>
+      <label><input type="radio" name="q47" value="B"> B. 視情況而定</label>
+      <label><input type="radio" name="q47" value="C"> C. 不同意</label>
+    </div>
+    
+    <div class="question">
+      <h3>第 49 題</h3>
+      <p>你覺得在現實世界中，善良的人通常會吃虧。</p>
+      <label><input type="radio" name="q48" value="A" required> A. 同意</label>
+      <label><input type="radio" name="q48" value="B"> B. 視情況而定</label>
+      <label><input type="radio" name="q48" value="C"> C. 不同意</label>
+    </div>
+    
+    <div class="question">
+      <h3>第 50 題</h3>
+      <p>你認為與人交往時，最重要的是對方對你的利用價值，而不是單純的情感連結。</p>
+      <label><input type="radio" name="q49" value="A" required> A. 同意</label>
+      <label><input type="radio" name="q49" value="B"> B. 視情況而定</label>
+      <label><input type="radio" name="q49" value="C"> C. 不同意</label>
+    </div>
+    
+  <button type="submit" id="submitBtn">提交測驗</button>
+  </form>
+  <div id="result"></div>
+  <script>
+    const form = document.getElementById("quizForm");
+    const resultDiv = document.getElementById("result");
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const data = new FormData(form);
+      let a = 0, b = 0, c = 0;
+      for (let i = 0; i < 50; i++) {
+        const val = data.get(`q${i}`);
+        if (val === "A") a++;
+        else if (val === "B") b++;
+        else if (val === "C") c++;
+      }
+      const max = Math.max(a, b, c);
+      const result = max === a ? "善" : max === b ? "中立" : "惡";
+      resultDiv.innerHTML = `你的人格傾向是：<strong>${result}</strong><br>A: ${a}, B: ${b}, C: ${c}`;
+      await fetch("https://script.google.com/macros/s/AKfycbwPzkXCWy8ZuRr4sNaOxNUpFhRF-XGD06Ekm4MAovzUAO7AkmL6y2rKReRf3RpR7ly-/exec", {
+        method: "POST",
+        body: JSON.stringify({ aCount: a, bCount: b, cCount: c, result }),
+        headers: { "Content-Type": "application/json" }
+      });
+    });
+  </script>
 </body>
 </html>
